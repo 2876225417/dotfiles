@@ -1,0 +1,214 @@
+# !!! Fix p10k's config on the top of the config file !!!
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# ===== Oh My Zsh Config =====
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# ===== Plugins Config =====
+plugins=(
+  # Core
+  git
+  z
+  fzf
+  extract
+  sudo
+  command-not-found
+
+  # History & Guide
+  history-substring-search
+  dirhistory
+
+  # UI Enhance
+  colored-man-pages
+
+  # Syntax Highlight and Auto-suggestion
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+
+  # System-relatives
+  copypath
+  copyfile
+  web-search
+  jsontools
+  encode64
+  urltools
+  battery
+  systemd
+  archlinux
+)
+
+# ===== Core Optimization =====
+# ZSH
+setopt AUTO_CD              # Auto cd dir
+setopt AUTO_PUSHD           # Auto pushd
+setopt PUSHD_IGNORE_DUPS    # Ignore repeated directory stack
+setopt CORRECT              # Correct command spelling
+setopt INTERACTIVE_COMMENTS # Allow comments in command
+setopt NO_BEEP              # Disable beep
+setopt NOTIFY               # Notify when background task finishs
+
+# zsh-autosuggestions Opt
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,underline"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+# Syntax highlight
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+
+# history-substring-search
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=green,fg=white,bold"
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND="bg=red,fg=white,bold"
+HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS="i"
+
+# fzf
+export FZF_DEFAULT_OPTS="
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc
+  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8
+  --height=80%
+  --layout=reverse
+  --border
+  --margin=1
+  --padding=1
+  --info=inline
+"
+
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
+
+# Load on my zsh
+source $ZSH/oh-my-zsh.sh
+
+# Env Vars
+# Export Path
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH"
+
+# Python Env
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# if command -v pyenv &> /dev/null; then
+#   eval "$(pyenv init -)"
+# fi
+
+# Flutter & Android Env
+export PATH="/opt/flutter/bin:$PATH"
+export ANDROID_HOME="$HOME/Android/Sdk"
+export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/29.0.14033849"
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools"
+export ANDROID_AVD_HOME="/home/ppqwqqq/.config/.android/avd"
+
+# Lang
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# History 
+export HISTSIZE=50000
+export SAVEHIST=50000
+export HISTFILE=~/.zsh_history
+
+# History Options
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST  
+setopt HIST_SAVE_NO_DUPS       
+setopt HIST_FIND_NO_DUPS       
+
+# Enable auto completion
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
+# Ignore non-existent commands
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+# Keybindings
+## vim-style
+bindkey -v
+
+# History Check Keybindings
+bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
+
+# Quick editing commands
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
+# History substring search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Extra Navigation Keybindings
+bindkey '^[[H' beginning-of-line    # Home
+bindkey '^[[F' end-of-line          # End
+bindkey '^[[3~' delete-char         # Delete
+
+# Limit fd
+ulimit -n 65536
+
+# SSH Env Detect
+if [[ -n $SSH_CONNECTION ]]; then
+  export IS_SSH=1
+fi
+
+# Term Type Detect
+case $TERM in
+  xterm-kitty)
+    export TERM_PROGRAM="kitty"
+    ;;
+  screen*)
+    export TERM_PROGRAM="screen"
+    ;;
+esac
+
+# Alias of LSD & Tree
+if [[ $IS_SSH ]] || [[ $TERM_PROGRAM == "screen" ]]; then
+  alias ls='lsd'
+  alias l='lsd -l'
+  alias la='lsd -la'
+  alias tree='tree'
+else
+  alias ls='lsd'
+  alias l='lsd -l'
+  alias la='lsd -la'
+  alias tree='tree -C'
+fi
+
+# Load p10k
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Load local env
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# Finally load customized env
+[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+
+# Clean duplicate dirs
+typeset -U PATH
+
+[ -f "/home/ppqwqqq/.ghcup/env" ] && . "/home/ppqwqqq/.ghcup/env" # ghcup-env
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/ppqwqqq/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/ppqwqqq/.config/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+# Added by Hugging Face CLI installer
+export PATH="/home/ppqwqqq/.local/bin:$PATH"
+
+# Make git for dotfiles
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
