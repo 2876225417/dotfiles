@@ -17,18 +17,13 @@ dotfiles/
 ## Quick Install
 
 ```bash
-# Clone and checkout
-git clone --bare https://github.com/ppqwqqq/dotfiles.git $HOME/.dotfiles
-alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-dot checkout
+# Clone the repo
+git clone https://github.com/ppqwqqq/dotfiles.git "$HOME/projs/dotfiles"
 
-# Deploy configs to home directory
-ln -sf "$HOME/projs/dotfiles/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
-ln -sf "$HOME/projs/dotfiles/tmux/tmux.conf"           "$HOME/.tmux.conf"
-ln -sf "$HOME/projs/dotfiles/zsh/zshrc"                "$HOME/.zshrc"
-
-# Install tmux plugins
+# Run each module's installer
+bash "$HOME/projs/dotfiles/alacritty/scripts/install.sh"
 bash "$HOME/projs/dotfiles/tmux/scripts/install_plugins.sh"
+bash "$HOME/projs/dotfiles/zsh/scripts/install.sh"
 ```
 
 ## Modules

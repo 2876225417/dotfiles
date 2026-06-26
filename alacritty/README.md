@@ -7,7 +7,8 @@ GPU-accelerated terminal emulator configuration.
 | File | Purpose |
 |---|---|
 | `alacritty.toml` | Main configuration |
-| `themes/` | Color scheme variants |
+| `themes/` | Color scheme variants (6 themes) |
+| `scripts/install.sh` | One-shot installer (alacritty + font + config) |
 
 ## Highlights
 
@@ -47,6 +48,18 @@ GPU-accelerated terminal emulator configuration.
 ## Deploy
 
 ```bash
+# One-shot: install alacritty, fonts, and deploy config
+bash "$HOME/projs/dotfiles/alacritty/scripts/install.sh"
+
+# Or manually:
 ln -sf "$HOME/projs/dotfiles/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
 cp -r "$HOME/projs/dotfiles/alacritty/themes" "$HOME/.config/alacritty/"
 ```
+
+### Dependencies
+
+| Component | Install |
+|---|---|
+| Alacritty | `sudo pacman -S alacritty` (Arch) |
+| FiraCode Nerd Font | `sudo pacman -S ttf-firacode-nerd` (Arch) |
+| fcitx5 (optional) | `sudo pacman -S fcitx5 fcitx5-gtk fcitx5-qt` |
