@@ -7,7 +7,7 @@ Z shell configuration — Oh My Zsh + powerlevel10k + vi mode.
 | File | Purpose |
 |---|---|
 | `zshrc` | Main zsh configuration |
-| `scripts/command-status.zsh` | Contextual command banners (git, docker, build...) |
+| `plugins/command-status/` | oh-my-zsh plugin — contextual command banners |
 
 ## Highlights
 
@@ -34,6 +34,7 @@ Z shell configuration — Oh My Zsh + powerlevel10k + vi mode.
 | `web-search` | Search from CLI |
 | `jsontools` / `encode64` / `urltools` | Data manipulation |
 | `battery` / `systemd` / `archlinux` | System integration |
+| `command-status` | Contextual command banners (custom) |
 
 ### Options
 
@@ -98,5 +99,12 @@ Threshold controlled by `CMD_STATUS_SLOW_THRESHOLD` env var (default 5s).
 ## Deploy
 
 ```bash
+# Link zshrc
 ln -sf "$HOME/projs/dotfiles/zsh/zshrc" "$HOME/.zshrc"
+
+# Install custom plugins
+cp -r "$HOME/projs/dotfiles/zsh/plugins/"* "$ZSH/custom/plugins/"
+
+# Reload
+exec zsh
 ```

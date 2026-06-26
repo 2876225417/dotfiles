@@ -38,6 +38,9 @@ plugins=(
   battery
   systemd
   archlinux
+
+  # Command status (contextual banners for git/docker/build etc.)
+  command-status
 )
 
 # ===== Core Optimization =====
@@ -197,9 +200,6 @@ fi
 
 # Load p10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Command status display (contextual banners for git/docker/build etc.)
-[[ -f ~/.zsh/scripts/command-status.zsh ]] && source ~/.zsh/scripts/command-status.zsh
 
 # Load local env
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
