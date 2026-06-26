@@ -7,6 +7,7 @@ Z shell configuration — Oh My Zsh + powerlevel10k + vi mode.
 | File | Purpose |
 |---|---|
 | `zshrc` | Main zsh configuration |
+| `scripts/command-status.zsh` | Contextual command banners (git, docker, build...) |
 
 ## Highlights
 
@@ -52,6 +53,29 @@ Z shell configuration — Oh My Zsh + powerlevel10k + vi mode.
 | `Ctrl-S` | Search history forward |
 | `Ctrl-X Ctrl-E` | Edit command in `$EDITOR` |
 | `↑` / `↓` | History substring search |
+
+### Command Status Banners
+
+Before known heavy commands, a dimmed contextual header is printed. After completion, elapsed time is reported if the command took ≥5 seconds.
+
+```
+❯ git clone https://github.com/foo/bar.git
+  ⏳ cloning bar...
+Cloning into 'bar'...
+  ✓ done (12s)
+
+❯ git push origin main
+  ⏳ pushing...
+Everything up-to-date
+
+❯ npm install
+  ⏳ installing packages...
+  ✓ done (34s)
+```
+
+Supported commands: `git clone/push/pull/fetch/rebase/merge/checkout`, `npm/pnpm/yarn install/build/test`, `docker build/compose up/pull/push`, `cargo/go/make/cmake`, `pacman/yay/paru/apt/dnf`, `rsync`, `scp`.
+
+Threshold controlled by `CMD_STATUS_SLOW_THRESHOLD` env var (default 5s).
 
 ### Environment
 
