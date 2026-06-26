@@ -7,6 +7,7 @@ Terminal multiplexer — Neovim-aligned keybindings, Catppuccin-themed status ba
 | File | Purpose |
 |---|---|
 | `tmux.conf` | Main tmux configuration |
+| `which-key-config.yaml` | which-key popup menu layout |
 | `scripts/install_plugins.sh` | One-shot plugin installer |
 | `scripts/cpu_info.sh` | CPU usage (status bar) |
 | `scripts/memory_info.sh` | Memory usage (status bar) |

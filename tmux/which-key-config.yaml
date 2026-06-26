@@ -1,0 +1,93 @@
+# yaml-language-server: $schema=config.schema.yaml
+command_alias_start_index: 200
+keybindings:
+  # root_table: C-Space
+  prefix_table: Space
+title:
+  style: align=centre,bold
+  prefix: tmux
+  prefix_style: fg=#cba6f7,align=centre,bold
+position:
+  x: R
+  y: P
+custom_variables:
+  - name: log_info
+    value: '#[fg=green,italics] [info]#[default]#[italics]'
+macros:
+  - name: reload-config
+    commands:
+      - display "#{log_info} Loading config... "
+      - source-file $HOME/.tmux.conf
+      - display -p "\n\n... Press ENTER to continue"
+items:
+  - name: +Pane
+    key: p
+    menu:
+      - name: Left
+        key: h
+        command: selectp -L
+      - name: Down
+        key: j
+        command: selectp -D
+      - name: Up
+        key: k
+        command: selectp -U
+      - name: Right
+        key: l
+        command: selectp -R
+      - separator: true
+      - name: Split horiz (top/bot)
+        key: s
+        command: switch-client -T split-mode
+      - name: Kill
+        key: x
+        command: 'confirm -p "Kill pane #P? (y/n)" killp'
+      - name: Zoom
+        key: z
+        command: resizep -Z
+  - name: +Window
+    key: w
+    menu:
+      - name: New
+        key: t
+        command: 'neww -c #{pane_current_path}'
+      - name: Kill
+        key: w
+        command: 'confirm -p "Kill window #W? (y/n)" killw'
+      - name: Choose
+        key: f
+        command: choose-tree -Zw
+      - name: 0-8
+        key: '0'
+        command: selectw -t 0
+  - name: +Copy/Scroll
+    key: c
+    menu:
+      - name: Enter copy mode
+        key: '['
+        command: copy-mode
+      - name: Paste buffer
+        key: ']'
+        command: pasteb
+  - name: +Session
+    key: s
+    menu:
+      - name: Choose
+        key: s
+        command: choose-tree -Zs
+  - name: +Client
+    key: C
+    menu:
+      - name: Reload config
+        key: r
+        macro: reload-config
+      - name: Detach
+        key: d
+        command: detach
+  - separator: true
+  - name: Reload config
+    key: r
+    macro: reload-config
+  - name: fzf
+    key: F
+    command: run-shell "~/.tmux/plugins/tmux-fzf/scripts/main.sh"

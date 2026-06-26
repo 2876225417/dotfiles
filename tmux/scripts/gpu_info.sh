@@ -1,5 +1,25 @@
 #!/bin/bash
 
+# Only show GPU info on machines with NVIDIA hardware.
+# On non-NVIDIA devices this outputs nothing so the status bar segment is empty.
+
+# Exit silently if no NVIDIA GPU or driver present
+if ! command -v nvidia-smi >/dev/null 2>&1; then
+    exit 0
+fi
+
+# Check for actual NVIDIA hardware via lspci (falls back to nvidia-smi -L)
+if command -v lspci >/dev/null 2>&1; then
+    if ! lspci 2>/dev/null | grep -qi 'nvidia'; then
+        exit 0
+    fi
+else
+    if ! nvidia-smi -L >/dev/null 2>&1; then
+        exit 0
+    fi
+fi
+
+# ----- cache -----------------------------------------------------------------
 cache_file="/tmp/tmux_gpu_info_${UID}.cache"
 cache_ttl=5
 now=$(date +%s)
@@ -12,19 +32,13 @@ if [ -f "$cache_file" ]; then
     fi
 fi
 
-if ! command -v nvidia-smi >/dev/null 2>&1; then
-    output=$(printf "󰢮 %-7s %2s%% %2s°" "N/A" "--" "--")
-    printf "%s" "$output" | tee "$cache_file" >/dev/null
-    printf "%s" "$output"
-    exit 0
-fi
-
+# ----- query nvidia-smi ------------------------------------------------------
 gpu_info=$(nvidia-smi --query-gpu=name,utilization.gpu,temperature.gpu --format=csv,noheader,nounits 2>/dev/null | head -1)
 
 if [ -n "$gpu_info" ]; then
     gpu_name_raw=$(echo "$gpu_info" | cut -d',' -f1 | sed 's/^ *//')
-    gpu_util=$(echo "$gpu_info" | cut -d',' -f2 | sed 's/^ *//')
-    gpu_temp=$(echo "$gpu_info" | cut -d',' -f3 | sed 's/^ *//')
+    gpu_util=$(echo "$gpu_info"    | cut -d',' -f2 | sed 's/^ *//')
+    gpu_temp=$(echo "$gpu_info"    | cut -d',' -f3 | sed 's/^ *//')
 
     model_num=$(echo "$gpu_name_raw" | grep -oE '[0-9]{3,4}' | head -1)
     if echo "$gpu_name_raw" | grep -qi 'RTX' && [ -n "$model_num" ]; then
@@ -39,7 +53,7 @@ if [ -n "$gpu_info" ]; then
 
     output=$(printf "󰢮 %-7s %2s%% %2s°" "$gpu_name_short" "$gpu_util" "$gpu_temp")
 else
-    output=$(printf "󰢮 %-7s %2s%% %2s°" "N/A" "--" "--")
+    exit 0
 fi
 
 printf "%s" "$output" | tee "$cache_file" >/dev/null

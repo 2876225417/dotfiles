@@ -8,6 +8,7 @@ set -euo pipefail
 
 TPM_DIR="$HOME/.tmux/plugins/tpm"
 TMUX_CONF="$HOME/.tmux.conf"
+DOTFILES_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 
 # ----- helpers ---------------------------------------------------------------
 info()  { printf '\033[1;34m[INFO]\033[0m %s\n' "$*"; }
@@ -44,6 +45,27 @@ info "Installing plugins listed in $TMUX_CONF ..."
 "$TPM_DIR/bin/install_plugins" || true
 
 ok "All plugins installed"
+
+# ----- deploy which-key config -----------------------------------------------
+WHICH_KEY_SRC="$DOTFILES_DIR/tmux/which-key-config.yaml"
+WHICH_KEY_DST="$HOME/.tmux/plugins/tmux-which-key/config.yaml"
+if [[ -f "$WHICH_KEY_SRC" ]]; then
+    info "Deploying which-key config ..."
+    cp "$WHICH_KEY_SRC" "$WHICH_KEY_DST"
+    ok "which-key config deployed"
+fi
+
+# ----- deploy status bar scripts ---------------------------------------------
+SCRIPTS_SRC="$DOTFILES_DIR/tmux/scripts"
+SCRIPTS_DST="$HOME/.tmux/scripts"
+info "Deploying status bar scripts to $SCRIPTS_DST ..."
+mkdir -p "$SCRIPTS_DST"
+for f in "$SCRIPTS_SRC"/*.sh; do
+    name=$(basename "$f")
+    [[ "$name" == "install_plugins.sh" ]] && continue
+    cp "$f" "$SCRIPTS_DST/$name"
+done
+ok "Status bar scripts deployed"
 
 # ----- reload tmux -----------------------------------------------------------
 if [[ -n "${TMUX:-}" ]]; then
