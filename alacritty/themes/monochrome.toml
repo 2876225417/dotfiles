@@ -1,0 +1,59 @@
+# ################### #
+#                     #
+#                     #
+#     Mono Chrome     #
+#                     #
+#                     #
+# ################### #
+[colors.primary]
+background = "#000000"
+foreground = "#ffffff"
+dim_foreground = "#808080"
+bright_foreground = "#ffffff"
+
+[colors.cursor]
+text = "#000000"
+cursor = "#ffffff"
+
+[colors.selection]
+text = "#000000"
+background = "#ffffff"
+
+[colors.search.matches]
+foreground = "#000000"
+background = "#c0c0c0"
+
+[colors.search.focused_match]
+foreground = "#ffffff"
+background = "#404040"
+
+[colors.normal]
+black = "#000000"
+red = "#808080"
+green = "#808080"
+yellow = "#808080"
+blue = "#808080"
+magenta = "#808080"
+cyan = "#808080"
+white = "#c0c0c0"
+
+[colors.bright]
+black = "#404040"
+red = "#ffffff"
+green = "#ffffff"
+yellow = "#ffffff"
+blue = "#ffffff"
+magenta = "#ffffff"
+cyan = "#ffffff"
+white = "#ffffff"
+
+[colors.dim]
+black = "#202020"
+red = "#606060"
+green = "#606060"
+yellow = "#606060"
+blue = "#606060"
+magenta = "#606060"
+cyan = "#606060"
+white = "#a0a0a0"
+
