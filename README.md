@@ -9,6 +9,7 @@ dotfiles/
 │   └── themes/
 ├── tmux/               # tmux multiplexer
 │   ├── tmux.conf
+│   ├── which-key-config.yaml
 │   └── scripts/
 └── zsh/                # Z shell
     └── zshrc
@@ -31,5 +32,5 @@ bash "$HOME/projs/dotfiles/zsh/scripts/install.sh"
 | Module | Description |
 |---|---|
 | [alacritty](alacritty/) | GPU-accelerated terminal — Tokyo Night theme, FiraCode Nerd Font, 50K scrollback |
-| [tmux](tmux/) | Terminal multiplexer — Neovim-aligned keybindings, Catppuccin status bar, 12 plugins |
+| [tmux](tmux/) | Terminal multiplexer — Neovim-aligned keybindings, Catppuccin status bar (top), real-time network speed, 13 plugins |
 | [zsh](zsh/) | Shell — Oh My Zsh + powerlevel10k + vi mode + autosuggestions |

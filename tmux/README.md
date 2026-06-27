@@ -9,12 +9,12 @@ Terminal multiplexer — Neovim-aligned keybindings, Catppuccin-themed status ba
 | `tmux.conf` | Main tmux configuration |
 | `which-key-config.yaml` | which-key popup menu layout |
 | `scripts/install_plugins.sh` | One-shot plugin installer |
-| `scripts/cpu_info.sh` | CPU usage (status bar) |
+| `scripts/cpu_info.sh` | CPU usage & temperature (status bar) |
 | `scripts/memory_info.sh` | Memory usage (status bar) |
-| `scripts/gpu_info.sh` | GPU usage (status bar) |
 | `scripts/disk_info.sh` | Disk usage (status bar) |
-| `scripts/network_info.sh` | Network info (status bar) |
-| `scripts/system_info.sh` | System info (status bar) |
+| `scripts/network_info.sh` | Network speed & IP (status bar) |
+| `scripts/network_speed_daemon.sh` | Background daemon — 0.1s network sampling |
+| `scripts/system_info.sh` | OS/kernel info (status bar) |
 | `scripts/load_info.sh` | Load average (status bar) |
 
 ## Prefix Key
@@ -81,10 +81,26 @@ Enter scroll/copy mode, then:
 | `tmux-plugins/tmux-cpu` | CPU in status bar |
 | `tmux-plugins/tmux-battery` | Battery in status bar |
 | `sainnhe/tmux-fzf` | Fuzzy finder |
+| `wfxr/tmux-fzf-url` | Fuzzy URL picker |
 | `nhdaly/tmux-better-mouse-mode` | Improved mouse scroll |
 | `alexwforsythe/tmux-which-key` | Popup keybinding menu |
 
+## Status Bar
+
+```
+┌──────────────────────────────────────────────────────────┐
+│ Session │ sysinfo │ user@host   [tabs]   CPU │ MEM │ DISK │ NET │ TIME │
+├──────────────────────────────────────────────────────────┤
+```
+
+- **Position**: top (separated from terminal by darker background)
+- **Theme**: Catppuccin Mocha — rainbow Powerline segments
+- **Refresh**: every 1s
+- **Network**: real-time ↓/↑ speed with 0.1s sampling (fixed-width display)
+- **Compact**: CPU shows usage+temp, memory shows used and %, disk shows % only
+
 ## Deploy
+
 
 ```bash
 # Link config

@@ -14,8 +14,19 @@ Z shell configuration — Oh My Zsh + powerlevel10k + vi mode.
 ## Highlights
 
 - **Framework**: [Oh My Zsh](https://ohmyz.sh/)
-- **Theme**: [powerlevel10k](https://github.com/romkatv/powerlevel10k) (config: `~/.p10k.zsh`)
+- **Theme**: [powerlevel10k](https://github.com/romkatv/powerlevel10k) — Catppuccin Mocha rainbow Powerline (config: `~/.p10k.zsh`)
 - **Vi mode**: `bindkey -v` — vim-style line editing
+
+### Prompt Layout
+
+```
+  os_icon │ dir │ vcs │ status │ cmd_time │ bg_jobs
+  ❯
+```
+
+- **Left prompt**: OS icon → directory → git status → exit code → command duration → background jobs
+- **Right prompt**: Cloud/language environments + time
+- **Rainbow segments**: each segment has a distinct Catppuccin Mocha color (Blue → Mauve → Green → Yellow → Peach → Pink)
 
 ### Plugins
 
