@@ -32,6 +32,16 @@ Pressing prefix shows a **which-key popup** with all available bindings.
 | `Ctrl-x` `s` `v` | Split left/right | `<Leader>sv` / `:vsplit` |
 | `Ctrl-x` `x` | Kill pane (confirm) | — |
 | `Ctrl-x` `z` | Toggle zoom | — |
+| `Ctrl-←/→/↑/↓` | Resize pane | `<C-left>` / `<C-right>` |
+
+## Keybindings — Resize
+
+| Key | Action |
+|---|---|
+| `Ctrl-←` | Shrink width 5 columns |
+| `Ctrl-→` | Grow width 5 columns |
+| `Ctrl-↑` | Shrink height 5 rows |
+| `Ctrl-↓` | Grow height 5 rows |
 
 ## Keybindings — Window Management
 
