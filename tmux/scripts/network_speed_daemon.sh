@@ -4,16 +4,17 @@
 # Started by network_info.sh if not already running
 
 format_speed() {
-    local bytes=$1
+    local bytes=$1 val
     if (( bytes >= 1073741824 )); then
-        printf "%4.1fG" "$(echo "scale=1; $bytes/1073741824" | bc)"
+        printf -v val '%d.%dG' $(( bytes / 1073741824 )) $(( (bytes % 1073741824) * 10 / 1073741824 ))
     elif (( bytes >= 1048576 )); then
-        printf "%4.1fM" "$(echo "scale=1; $bytes/1048576" | bc)"
+        printf -v val '%d.%dM' $(( bytes / 1048576 )) $(( (bytes % 1048576) * 10 / 1048576 ))
     elif (( bytes >= 1024 )); then
-        printf "%4.1fK" "$(echo "scale=1; $bytes/1024" | bc)"
+        printf -v val '%d.%dK' $(( bytes / 1024 )) $(( (bytes % 1024) * 10 / 1024 ))
     else
-        printf "%4dB" "$bytes"
+        printf -v val '%dB' "$bytes"
     fi
+    printf '%6s' "$val"
 }
 
 interface=$(ip route | awk '/default/ {print $5; exit}')
