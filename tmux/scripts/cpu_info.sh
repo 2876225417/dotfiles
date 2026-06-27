@@ -60,13 +60,4 @@ if [ "$cpu_temp" = "N/A" ]; then
     done
 fi
 
-# CPU frequency (GHz)
-cpu_freq="N/A"
-if [ -f /proc/cpuinfo ]; then
-    freq_mhz=$(awk -F': ' '/cpu MHz/ {sum+=$2; n++} END {if (n>0) printf "%.0f", sum/n}' /proc/cpuinfo)
-    if [[ "$freq_mhz" =~ ^[0-9]+$ ]] && [ "$freq_mhz" -gt 0 ]; then
-        cpu_freq=$(awk -v mhz="$freq_mhz" 'BEGIN {printf "%.1f", mhz/1000}')
-    fi
-fi
-
-printf "󰍛 %2s%% %3s° %3sG" "$cpu_usage" "$cpu_temp" "$cpu_freq"
+printf "󰍛 %2s%% %3s°" "$cpu_usage" "$cpu_temp"
