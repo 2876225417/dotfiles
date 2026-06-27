@@ -532,9 +532,8 @@
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND='#1e1e2e'
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND='#a6e3a1'
 
-  # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
-  # it will signify error by turning red.
-  typeset -g POWERLEVEL9K_STATUS_ERROR=false
+  # Status when it's just an error code (e.g., '1'). Show exit code explicitly.
+  typeset -g POWERLEVEL9K_STATUS_ERROR=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
   typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='#1e1e2e'
   typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND='#f38ba8'
