@@ -51,6 +51,7 @@ WHICH_KEY_SRC="$DOTFILES_DIR/tmux/which-key-config.yaml"
 WHICH_KEY_DST="$HOME/.tmux/plugins/tmux-which-key/config.yaml"
 if [[ -f "$WHICH_KEY_SRC" ]]; then
     info "Deploying which-key config ..."
+    mkdir -p "$(dirname "$WHICH_KEY_DST")"
     cp "$WHICH_KEY_SRC" "$WHICH_KEY_DST"
     ok "which-key config deployed"
 fi

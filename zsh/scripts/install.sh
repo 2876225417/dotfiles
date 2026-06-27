@@ -74,7 +74,16 @@ fi
 step "Installing external plugins"
 
 clone_plugin() {
-    local name="$1" url="$2" dir="$ZSH_CUSTOM/plugins/$name"
+    local name="${1:-}"
+    local url="${2:-}"
+    
+    if [[ -z "$name" || -z "$url" ]]; then
+        warn "Invalid plugin: name='$name' url='$url'"
+        return 1
+    fi
+    
+    local dir="$ZSH_CUSTOM/plugins/$name"
+    
     if [[ -d "$dir/.git" ]]; then
         ok "$name already installed"
     else
